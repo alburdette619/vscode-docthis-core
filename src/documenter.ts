@@ -38,7 +38,9 @@ export class Documenter implements vs.Disposable {
 
         const position = ts.getPositionOfLineAndCharacter(sourceFile, caret.line, caret.character);
         const node = utils.findChildForPosition(sourceFile, position);
-        const documentNode = utils.nodeIsOfKind(node) ? node : utils.findFirstParent(node);
+        const firstParent = utils.findFirstParent(node);
+        const documentNode = utils.nodeIsOfKind(node) ? node : firstParent;
+        const hasParent = !!firstParent;
 
         if (!documentNode) {
             this._showFailureMessage(commandName, "at the current position");
@@ -50,7 +52,7 @@ export class Documenter implements vs.Disposable {
         const docLocation = this._documentNode(sb, documentNode, sourceFile);
 
         if (docLocation) {
-            this._insertDocumentation(sb, docLocation, editor, forCompletion);
+            this._insertDocumentation(sb, docLocation, editor, forCompletion, hasParent);
         } else {
             this._showFailureMessage(commandName, "at the current position");
         }
@@ -114,13 +116,13 @@ export class Documenter implements vs.Disposable {
         vs.window.showErrorMessage(`Sorry! '${commandName}' wasn't able to produce documentation ${condition}.`);
     }
 
-    private _insertDocumentation(sb: utils.SnippetStringBuilder, location: ts.LineAndCharacter, editor: vs.TextEditor, forCompletion: boolean) {
+    private _insertDocumentation(sb: utils.SnippetStringBuilder, location: ts.LineAndCharacter, editor: vs.TextEditor, forCompletion: boolean, hasParent: boolean) {
         const startPosition = new vs.Position(forCompletion ? location.line - 1 : location.line, location.character);
         const endPosition = new vs.Position(location.line, location.character);
 
         const range = new Range(startPosition, endPosition);
 
-        editor.insertSnippet(sb.toCommentValue(), range);
+        editor.insertSnippet(sb.toCommentValue(hasParent), range);
     }
 
     private _getSourceFile(document: vs.TextDocument) {

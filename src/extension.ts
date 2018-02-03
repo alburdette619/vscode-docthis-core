@@ -59,7 +59,7 @@ class DocThisCompletionItem extends CompletionItem {
         const line = document.lineAt(position.line).text;
         const prefix = line.slice(0, position.character).match(/\{3}\s*$/);
         const start = position.translate(0, prefix ? -prefix[0].length : 0);
-        this.range = new Range(start, 0);
+        this.range = new Range(start, position.translate(0, 0));
 
         this.command = {
             title: "Document This",

@@ -2,7 +2,7 @@
   "name": "docthis-core",
   "displayName": "Document This Core",
   "description": "Automatically generates detailed docs-core comments in TypeScript and JavaScript files.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "alburdette619",
   "icon": "images/icon.png",
   "galleryBanner": {

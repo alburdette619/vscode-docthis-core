@@ -2,7 +2,7 @@
   "name": "docthis-core",
   "displayName": "Document This Core",
   "description": "Automatically generates detailed docs-core comments in TypeScript and JavaScript files.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "alburdette619",
   "icon": "images/icon.png",
   "galleryBanner": {
@@ -98,7 +98,6 @@
     "vscode:prepublish": "npm run compile",
     "lint": "node ./node_modules/tslint/bin/tslint src/**/*.ts",
     "compile": "npm run lint && tsc -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.37",

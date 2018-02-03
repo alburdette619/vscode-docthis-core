@@ -155,12 +155,12 @@ export class Documenter implements vs.Disposable {
             case ts.SyntaxKind.SetAccessor:
                 this._emitPropertyDeclaration(sb, <ts.AccessorDeclaration>node);
                 break;
-            case ts.SyntaxKind.InterfaceDeclaration:
-                this._emitInterfaceDeclaration(sb, <ts.InterfaceDeclaration>node);
-                break;
-            case ts.SyntaxKind.EnumDeclaration:
-                this._emitEnumDeclaration(sb, <ts.EnumDeclaration>node);
-                break;
+            // case ts.SyntaxKind.InterfaceDeclaration:
+            //     this._emitInterfaceDeclaration(sb, <ts.InterfaceDeclaration>node);
+            //     break;
+            // case ts.SyntaxKind.EnumDeclaration:
+            //     this._emitEnumDeclaration(sb, <ts.EnumDeclaration>node);
+            //     break;
             case ts.SyntaxKind.EnumMember:
                 sb.appendLine();
                 break;
@@ -186,7 +186,7 @@ export class Documenter implements vs.Disposable {
 
     private _emitDescriptionHeader(sb: utils.SnippetStringBuilder) {
         if (vs.workspace.getConfiguration().get("docthis.includeDescriptionTag", false)) {
-            sb.append("@description ");
+            sb.append("@desc ");
             sb.appendSnippetTabstop();
             sb.appendLine();
         } else {
@@ -234,10 +234,10 @@ export class Documenter implements vs.Disposable {
 
         this._emitDescriptionHeader(sb);
 
-        this._emitTypeParameters(sb, node);
+        // this._emitTypeParameters(sb, node);
         this._emitParameters(sb, node);
         this._emitReturns(sb, node);
-        this._emitMemberOf(sb, node.parent);
+        // this._emitMemberOf(sb, node.parent);
 
         return ts.getLineAndCharacterOfPosition(sourceFile, targetNode.getStart());
     }
@@ -257,7 +257,7 @@ export class Documenter implements vs.Disposable {
         sb.appendLine();
 
         this._emitHeritageClauses(sb, node);
-        this._emitTypeParameters(sb, node);
+        // this._emitTypeParameters(sb, node);
     }
 
     private _emitPropertyDeclaration(sb: utils.SnippetStringBuilder, node: ts.PropertyDeclaration | ts.AccessorDeclaration) {
@@ -286,47 +286,47 @@ export class Documenter implements vs.Disposable {
             }
         }
 
-        this._emitMemberOf(sb, node.parent);
+        // this._emitMemberOf(sb, node.parent);
     }
 
-    private _emitInterfaceDeclaration(sb: utils.SnippetStringBuilder, node: ts.InterfaceDeclaration) {
-        this._emitDescriptionHeader(sb);
-        this._emitAuthor(sb);
+    // private _emitInterfaceDeclaration(sb: utils.SnippetStringBuilder, node: ts.InterfaceDeclaration) {
+    //     this._emitDescriptionHeader(sb);
+    //     this._emitAuthor(sb);
 
-        this._emitModifiers(sb, node);
+    //     this._emitModifiers(sb, node);
 
-        sb.appendLine(`@interface ${ node.name.getText() }`);
+    //     sb.appendLine(`@interface ${ node.name.getText() }`);
 
-        this._emitHeritageClauses(sb, node);
-        this._emitTypeParameters(sb, node);
-    }
+    //     this._emitHeritageClauses(sb, node);
+    //     this._emitTypeParameters(sb, node);
+    // }
 
-    private _emitEnumDeclaration(sb: utils.SnippetStringBuilder, node: ts.EnumDeclaration) {
-        this._emitDescriptionHeader(sb);
+    // private _emitEnumDeclaration(sb: utils.SnippetStringBuilder, node: ts.EnumDeclaration) {
+    //     this._emitDescriptionHeader(sb);
 
-        this._emitModifiers(sb, node);
+    //     this._emitModifiers(sb, node);
 
-        sb.appendLine(`@enum {number}`);
-    }
+    //     sb.appendLine(`@enum {number}`);
+    // }
 
     private _emitMethodDeclaration(sb: utils.SnippetStringBuilder, node: ts.MethodDeclaration | ts.FunctionDeclaration) {
         this._emitDescriptionHeader(sb);
         this._emitAuthor(sb);
 
         this._emitModifiers(sb, node);
-        this._emitTypeParameters(sb, node);
+        // this._emitTypeParameters(sb, node);
         this._emitParameters(sb, node);
         this._emitReturns(sb, node);
-        this._emitMemberOf(sb, node.parent);
+        // this._emitMemberOf(sb, node.parent);
     }
 
-    private _emitMemberOf(sb: utils.SnippetStringBuilder, parent: ts.Node) {
-        let enabledForClasses = parent.kind === ts.SyntaxKind.ClassDeclaration && vs.workspace.getConfiguration().get("docthis.includeMemberOfOnClassMembers", true);
-        let enabledForInterfaces = parent.kind === ts.SyntaxKind.InterfaceDeclaration && vs.workspace.getConfiguration().get("docthis.includeMemberOfOnInterfaceMembers", true);
-        if (parent && (<any>parent)["name"] && (enabledForClasses || enabledForInterfaces)) {
-            sb.appendLine("@memberof " + (<any>parent)["name"].text);
-        }
-    }
+    // private _emitMemberOf(sb: utils.SnippetStringBuilder, parent: ts.Node) {
+    //     let enabledForClasses = parent.kind === ts.SyntaxKind.ClassDeclaration && vs.workspace.getConfiguration().get("docthis.includeMemberOfOnClassMembers", true);
+    //     let enabledForInterfaces = parent.kind === ts.SyntaxKind.InterfaceDeclaration && vs.workspace.getConfiguration().get("docthis.includeMemberOfOnInterfaceMembers", true);
+    //     if (parent && (<any>parent)["name"] && (enabledForClasses || enabledForInterfaces)) {
+    //         sb.appendLine("@page " + (<any>parent)["name"].text);
+    //     }
+    // }
 
     private _isNameBooleanLike(name: string): boolean {
         return /(?:is|has|can)[A-Z_]/.test(name);
@@ -469,20 +469,20 @@ export class Documenter implements vs.Disposable {
         this._emitAuthor(sb);
 
         this._emitParameters(sb, node);
-        this._emitMemberOf(sb, node.parent);
+        // this._emitMemberOf(sb, node.parent);
     }
 
-    private _emitTypeParameters(sb: utils.SnippetStringBuilder, node: ts.ClassLikeDeclaration | ts.InterfaceDeclaration | ts.MethodDeclaration | ts.FunctionDeclaration | ts.FunctionExpression | ts.ArrowFunction) {
-        if (!node.typeParameters) {
-            return;
-        }
+    // private _emitTypeParameters(sb: utils.SnippetStringBuilder, node: ts.ClassLikeDeclaration | ts.InterfaceDeclaration | ts.MethodDeclaration | ts.FunctionDeclaration | ts.FunctionExpression | ts.ArrowFunction) {
+    //     if (!node.typeParameters) {
+    //         return;
+    //     }
 
-        node.typeParameters.forEach(parameter => {
-            sb.append(`@template ${ parameter.name.getText() } `);
-            sb.appendSnippetTabstop();
-            sb.appendLine();
-        });
-    }
+    //     node.typeParameters.forEach(parameter => {
+    //         sb.append(`@template ${ parameter.name.getText() } `);
+    //         sb.appendSnippetTabstop();
+    //         sb.appendLine();
+    //     });
+    // }
 
     private _emitHeritageClauses(sb: utils.SnippetStringBuilder, node: ts.ClassLikeDeclaration | ts.InterfaceDeclaration) {
         if (!node.heritageClauses || !includeTypes()) {
@@ -513,16 +513,18 @@ export class Documenter implements vs.Disposable {
 
         node.modifiers.forEach(modifier => {
             switch (modifier.kind) {
-                case ts.SyntaxKind.ExportKeyword:
-                    sb.appendLine("@export"); return;
-                case ts.SyntaxKind.AbstractKeyword:
-                    sb.appendLine("@abstract"); return;
+                // case ts.SyntaxKind.ExportKeyword:
+                //     sb.appendLine("@export"); return;
+                // case ts.SyntaxKind.AbstractKeyword:
+                //     sb.appendLine("@abstract"); return;
                 case ts.SyntaxKind.ProtectedKeyword:
                     sb.appendLine("@protected"); return;
                 case ts.SyntaxKind.PrivateKeyword:
                     sb.appendLine("@private"); return;
-                case ts.SyntaxKind.StaticKeyword:
-                    sb.appendLine("@static"); return;
+                case ts.SyntaxKind.PublicKeyword:
+                    sb.appendLine("@public"); return;
+                // case ts.SyntaxKind.StaticKeyword:
+                //     sb.appendLine("@static"); return;
             }
         });
     }

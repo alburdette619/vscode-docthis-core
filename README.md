@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/alburdette619/vscode-docthis.svg?branch=master)](https://travis-ci.org/alburdette619/vscode-docthis)
+[![Build Status](https://travis-ci.org/alburdette619/vscode-docthis-core.svg?branch=master)](https://travis-ci.org/alburdette619/vscode-docthis-core)
 
 # Document This Core
 "Document This Core" is a Visual Studio Code extension that automatically generates detailed docs-core comments for both TypeScript and JavaScript files.  It is based on [https://github.com/joelday/vscode-docthis]("Document This") by [joelday](https://github.com/joelday) and alter to use triple forward-slash style comments.

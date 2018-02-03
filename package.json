@@ -1,9 +1,9 @@
 {
-  "name": "docthis",
-  "displayName": "Document This",
-  "description": "Automatically generates detailed JSDoc comments in TypeScript and JavaScript files.",
-  "version": "0.6.0",
-  "publisher": "joelday",
+  "name": "docthis-core",
+  "displayName": "Document This Core",
+  "description": "Automatically generates detailed docs-core comments in TypeScript and JavaScript files.",
+  "version": "0.0.1",
+  "publisher": "alburdette619",
   "icon": "images/icon.png",
   "galleryBanner": {
     "color": "#252627",
@@ -26,67 +26,67 @@
   "contributes": {
     "commands": [
       {
-        "command": "docthis.documentThis",
+        "command": "docthiscore.documentThis",
         "title": "Document This"
       },
       {
-        "command": "docthis.traceTypeScriptSyntaxNode",
+        "command": "docthiscore.traceTypeScriptSyntaxNode",
         "title": "Trace TypeScript Syntax Node"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "docthis.documentThis"
+          "command": "docthiscore.documentThis"
         }
       ]
     },
     "keybindings": [
       {
-        "command": "docthis.documentThis",
+        "command": "docthiscore.documentThis",
         "key": "ctrl+alt+d ctrl+alt+d"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "Document This configuration",
+      "title": "Document This Core configuration",
       "properties": {
-        "docthis.includeTypes": {
+        "docthiscore.includeTypes": {
           "type": "boolean",
           "default": true,
           "description": "When enabled, type information is added to comment tags."
         },
-        "docthis.includeMemberOfOnClassMembers": {
+        "docthiscore.includeMemberOfOnClassMembers": {
           "type": "boolean",
           "default": true,
           "description": "When enabled, memberOf information is added to comment tags on class members."
         },
-        "docthis.includeMemberOfOnInterfaceMembers": {
+        "docthiscore.includeMemberOfOnInterfaceMembers": {
           "type": "boolean",
           "default": true,
           "description": "When enabled, memberOf information is added to comment tags on interface members."
         },
-        "docthis.includeDescriptionTag": {
+        "docthiscore.includeDescriptionTag": {
           "type": "boolean",
           "default": false,
           "description": "When enabled, JSDoc comments for functions and methods will include @description."
         },
-        "docthis.enableHungarianNotationEvaluation": {
+        "docthiscore.enableHungarianNotationEvaluation": {
           "type": "boolean",
           "default": false,
           "description": "When enabled, hungarian notation will be used as a type hint."
         },
-        "docthis.inferTypesFromNames": {
+        "docthiscore.inferTypesFromNames": {
           "type": "boolean",
           "default": false,
           "description": "When enabled, will use names of params & methods as type hints."
         },
-        "docthis.includeAuthorTag": {
+        "docthiscore.includeAuthorTag": {
           "type": "boolean",
           "default": false,
           "description": "When enabled, will add the @author tag."
         },
-        "docthis.authorName": {
+        "docthiscore.authorName": {
           "type": "string",
           "default": "(Set the text for this tag by adding docthis.authorName to your settings file.)",
           "description": "When docthis.includeAuthorTag is enabled, will add @author tag with this value."
@@ -97,8 +97,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "lint": "node ./node_modules/tslint/bin/tslint src/**/*.ts",
-    "compile": "npm run lint && tsc -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
+    "compile": "npm run lint && tsc -p ./"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.37",
@@ -110,10 +109,10 @@
     "typescript": "^2.2.0"
   },
   "bugs": {
-    "url": "https://github.com/joelday/vscode-docthis/issues"
+    "url": "https://github.com/alburdette619/vscode-docthis-core/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joelday/vscode-docthis"
+    "url": "https://github.com/alburdette619/vscode-docthis-core"
   }
 }

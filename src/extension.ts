@@ -63,7 +63,7 @@ class DocThisCompletionItem extends CompletionItem {
 
         this.command = {
             title: "Document This",
-            command: "docthis.documentThis",
+            command: "docthiscore.documentThis",
             arguments: [true]
         };
     }
@@ -86,7 +86,7 @@ export function activate(context: vs.ExtensionContext): void {
         },
         "/"));
 
-    context.subscriptions.push(vs.commands.registerCommand("docthis.documentThis", (forCompletion: boolean) => {
+    context.subscriptions.push(vs.commands.registerCommand("docthiscore.documentThis", (forCompletion: boolean) => {
         const commandName = "Document This";
 
         runCommand(commandName, vs.window.activeTextEditor.document, () => {
@@ -94,7 +94,7 @@ export function activate(context: vs.ExtensionContext): void {
         });
     }));
 
-    context.subscriptions.push(vs.commands.registerCommand("docthis.traceTypeScriptSyntaxNode", () => {
+    context.subscriptions.push(vs.commands.registerCommand("docthiscore.traceTypeScriptSyntaxNode", () => {
         const commandName = "Trace TypeScript Syntax Node";
 
         runCommand(commandName, vs.window.activeTextEditor.document, () => {

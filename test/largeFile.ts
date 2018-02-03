@@ -21,7 +21,7 @@ interface SomeInterface {
     someFunction2: (someParam1: string, someParam2: number) => boolean;
 
     /**
-     * Testing with docthis.includeMemberOfOnInterfaceMembers set to false.
+     * Testing with docthiscore.includeMemberOfOnInterfaceMembers set to false.
      */
     someFunction3: (someParam1: Date, someParam2: string, someParam3: boolean) => number;
 }
@@ -121,7 +121,7 @@ class SomeClass {
     }
 
     /**
-     * Testing with docthis.includeMemberOfOnClassMembers set to false
+     * Testing with docthiscore.includeMemberOfOnClassMembers set to false
      *
      * @param {string} someParam1
      * @param {number} someParam2

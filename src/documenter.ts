@@ -6,15 +6,15 @@ import { LanguageServiceHost } from "./languageServiceHost";
 import { Range } from "vscode";
 
 function includeTypes() {
-    return vs.workspace.getConfiguration().get("docthis.includeTypes", true);
+    return vs.workspace.getConfiguration().get("docthiscore.includeTypes", true);
 }
 
 function inferTypes() {
-    return vs.workspace.getConfiguration().get("docthis.inferTypesFromNames", false);
+    return vs.workspace.getConfiguration().get("docthiscore.inferTypesFromNames", false);
 }
 
 function enableHungarianNotationEvaluation() {
-    return vs.workspace.getConfiguration().get("docthis.enableHungarianNotationEvaluation", false);
+    return vs.workspace.getConfiguration().get("docthiscore.enableHungarianNotationEvaluation", false);
 }
 
 export class Documenter implements vs.Disposable {
@@ -187,7 +187,7 @@ export class Documenter implements vs.Disposable {
     }
 
     private _emitDescriptionHeader(sb: utils.SnippetStringBuilder) {
-        if (vs.workspace.getConfiguration().get("docthis.includeDescriptionTag", false)) {
+        if (vs.workspace.getConfiguration().get("docthiscore.includeDescriptionTag", false)) {
             sb.append("@desc ");
             sb.appendSnippetTabstop();
             sb.appendLine();
@@ -202,8 +202,8 @@ export class Documenter implements vs.Disposable {
     }
 
     private _emitAuthor(sb: utils.SnippetStringBuilder) {
-        if (vs.workspace.getConfiguration().get("docthis.includeAuthorTag", false)) {
-            let author: string = vs.workspace.getConfiguration().get("docthis.authorName", "");
+        if (vs.workspace.getConfiguration().get("doctdocthiscorehis.includeAuthorTag", false)) {
+            let author: string = vs.workspace.getConfiguration().get("docthiscore.authorName", "");
             sb.append("@author " + author);
             sb.appendSnippetTabstop();
             sb.appendLine();
@@ -323,8 +323,8 @@ export class Documenter implements vs.Disposable {
     }
 
     // private _emitMemberOf(sb: utils.SnippetStringBuilder, parent: ts.Node) {
-    //     let enabledForClasses = parent.kind === ts.SyntaxKind.ClassDeclaration && vs.workspace.getConfiguration().get("docthis.includeMemberOfOnClassMembers", true);
-    //     let enabledForInterfaces = parent.kind === ts.SyntaxKind.InterfaceDeclaration && vs.workspace.getConfiguration().get("docthis.includeMemberOfOnInterfaceMembers", true);
+    //     let enabledForClasses = parent.kind === ts.SyntaxKind.ClassDeclaration && vs.workspace.getConfiguration().get("docthiscore.includeMemberOfOnClassMembers", true);
+    //     let enabledForInterfaces = parent.kind === ts.SyntaxKind.InterfaceDeclaration && vs.workspace.getConfiguration().get("docthiscore.includeMemberOfOnInterfaceMembers", true);
     //     if (parent && (<any>parent)["name"] && (enabledForClasses || enabledForInterfaces)) {
     //         sb.appendLine("@page " + (<any>parent)["name"].text);
     //     }

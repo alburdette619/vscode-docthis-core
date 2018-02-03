@@ -229,10 +229,8 @@ export class SnippetStringBuilder {
         return this;
     }
 
-    toCommentValue() {
+    toCommentValue(inline: boolean) {
         let sb = new StringBuilder();
-
-        sb.appendLine("/**");
 
         const lines = this._snippet.value.split("\n");
         lines.forEach((line, i) => {
@@ -240,11 +238,9 @@ export class SnippetStringBuilder {
                 return;
             }
 
-            sb.append(" * ");
+            sb.append(` ${inline ? '#' : ''}/// `);
             sb.appendLine(line);
         });
-
-        sb.appendLine(" */");
 
         return new vs.SnippetString(sb.toString());
     }

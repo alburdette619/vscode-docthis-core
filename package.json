@@ -106,7 +106,8 @@
     "tslint": "^4.3.1"
   },
   "dependencies": {
-    "typescript": "^2.2.0"
+    "typescript": "^2.2.0",
+    "vscode": "^1.1.10"
   },
   "bugs": {
     "url": "https://github.com/alburdette619/vscode-docthis-core/issues"

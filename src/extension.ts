@@ -57,12 +57,9 @@ class DocThisCompletionItem extends CompletionItem {
         this.sortText = "\0";
 
         const line = document.lineAt(position.line).text;
-        const prefix = line.slice(0, position.character).match(/\/\**\s*$/);
-        const suffix = line.slice(position.character).match(/^\s*\**\//);
+        const prefix = line.slice(0, position.character).match(/\{3}\s*$/);
         const start = position.translate(0, prefix ? -prefix[0].length : 0);
-        this.range = new Range(
-            start,
-            position.translate(0, suffix ? suffix[0].length : 0));
+        this.range = new Range(start, 0);
 
         this.command = {
             title: "Document This",
@@ -80,14 +77,14 @@ export function activate(context: vs.ExtensionContext): void {
                 const line = document.lineAt(position.line).text;
                 const prefix = line.slice(0, position.character);
 
-                if (prefix.match(/^\s*$|\/\*\*\s*$|^\s*\/\*\*+\s*$/)) {
+                if (prefix.match(/^\s*$|\/{3}#?\s*$|^\s*\/{3}#?\s*$/)) {
                     return [new DocThisCompletionItem(document, position)];
                 }
 
                 return;
             }
         },
-        "/", "*"));
+        "/"));
 
     context.subscriptions.push(vs.commands.registerCommand("docthis.documentThis", (forCompletion: boolean) => {
         const commandName = "Document This";

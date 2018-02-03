@@ -97,7 +97,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "lint": "node ./node_modules/tslint/bin/tslint src/**/*.ts",
-    "compile": "npm run lint && tsc -p ./",
+    "compile": "npm run lint && tsc -p ./"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.37",

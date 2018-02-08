@@ -534,12 +534,14 @@ export class Documenter implements vs.Disposable {
     }
 
     private _emitName(sb: utils.SnippetStringBuilder, node: ts.FunctionDeclaration | ts.VariableDeclarationList) {
+        let name;
         if (ts.isFunctionDeclaration(node) && node.name) {
-            sb.appendLine(`@name ${node.name.text}`);
+            name = node.name.getText();
         } else if (ts.isVariableDeclarationList(node) && node.declarations.length) {
-            sb.appendLine(`@name ${(<ts.VariableDeclarationList>node).declarations[0].name.getText()}`);
+            name = (<ts.VariableDeclarationList>node).declarations[0].name.getText();
         }
 
+        sb.appendLine(`@name ${name}`);
         return;
     }
 

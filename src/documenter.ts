@@ -180,6 +180,8 @@ export class Documenter implements vs.Disposable {
             case ts.SyntaxKind.VariableDeclarationList:
             case ts.SyntaxKind.VariableStatement:
                 return this._emitArrowFunction(sb, node, sourceFile);
+            case ts.SyntaxKind.SourceFile:
+                return this._emitSourceFile(sb, <ts.SourceFile>node);
             default:
                 return;
         }
@@ -562,6 +564,19 @@ export class Documenter implements vs.Disposable {
         }
 
         return;
+    }
+
+    private _emitSourceFile(sb: utils.SnippetStringBuilder, node: ts.SourceFile) {
+        const path = node.fileName.slice(0, -3);
+        const pathParts = path.split("/");
+
+        sb.appendLine(`@name ${pathParts.slice(-1)}`);
+        this._emitDescriptionHeader(sb);
+        this._emitAuthor(sb);
+        sb.appendLine();
+        sb.appendLine(`@page ${pathParts.slice(-2).join("/")}`);
+
+        return { line: 1, character: 0 };
     }
 
     dispose() {

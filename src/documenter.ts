@@ -312,6 +312,7 @@ export class Documenter implements vs.Disposable {
     // }
 
     private _emitMethodDeclaration(sb: utils.SnippetStringBuilder, node: ts.MethodDeclaration | ts.FunctionDeclaration) {
+        if (ts.isFunctionDeclaration(node)) { this._emitName(sb, node); }
         this._emitDescriptionHeader(sb);
         this._emitAuthor(sb);
 
@@ -531,6 +532,15 @@ export class Documenter implements vs.Disposable {
         });
     }
 
+    private _emitName(sb: utils.SnippetStringBuilder, node: ts.FunctionDeclaration | ts.VariableDeclarationList) {
+        if (ts.isFunctionDeclaration(node) && node.name) {
+            sb.appendLine(`@name ${node.name.text}`);
+        } else if (ts.isVariableDeclarationList(node) && node.declarations.length) {
+            sb.appendLine(`@name ${(<ts.VariableDeclarationList>node).declarations[0].name.getText()}`);
+        }
+
+        return;
+    }
     dispose() {
         if (this._outputChannel) {
             this._outputChannel.dispose();

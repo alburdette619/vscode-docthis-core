@@ -40,7 +40,6 @@ export class Documenter implements vs.Disposable {
         const node = utils.findChildForPosition(sourceFile, position);
         const firstParent = utils.findFirstParent(node);
         const documentNode = utils.nodeIsOfKind(node) ? node : firstParent;
-        const hasParent = !!firstParent;
 
         if (!documentNode) {
             this._showFailureMessage(commandName, "at the current position");
@@ -52,7 +51,7 @@ export class Documenter implements vs.Disposable {
         const docLocation = this._documentNode(sb, documentNode, sourceFile);
 
         if (docLocation) {
-            this._insertDocumentation(sb, docLocation, editor, forCompletion, hasParent);
+            this._insertDocumentation(sb, docLocation, editor, forCompletion, false);
         } else {
             this._showFailureMessage(commandName, "at the current position");
         }
@@ -146,8 +145,7 @@ export class Documenter implements vs.Disposable {
         return sourceFile;
     }
 
-    private _documentNode(sb: utils.SnippetStringBuilder, node: ts.Node, sourceFile: ts.SourceFile): ts.LineAndCharacter {
-        switch (node.kind) {
+    private _documentNode(sb: utils.SnippetStringBuilder, node: ts.Node, sourceFile: ts.SourceFile): ts.LineAndCharacter {switch (node.kind) {
             case ts.SyntaxKind.ClassDeclaration:
                 this._emitClassDeclaration(sb, <ts.ClassDeclaration>node);
                 break;
@@ -179,6 +177,9 @@ export class Documenter implements vs.Disposable {
                 return this._emitFunctionExpression(sb, <ts.FunctionExpression>node, sourceFile);
             case ts.SyntaxKind.VariableDeclaration:
                 return this._emitVariableDeclaration(sb, <ts.VariableDeclaration>node, sourceFile);
+            case ts.SyntaxKind.VariableDeclarationList:
+            case ts.SyntaxKind.VariableStatement:
+                return this._emitArrowFunction(sb, node, sourceFile);
             default:
                 return;
         }
@@ -541,6 +542,25 @@ export class Documenter implements vs.Disposable {
 
         return;
     }
+
+    // Arrow functions don't seem to come out to ts.ArrowFunction.  Instead they seem to be read as
+    // VariableDeclarationLists and VariableStatements.  This covers that special case.
+    private _emitArrowFunction(sb: utils.SnippetStringBuilder, node: ts.Node, sourceFile: ts.SourceFile) {
+        if (ts.isVariableStatement(node) && node.declarationList && node.declarationList.declarations.length) {
+            node = <ts.VariableDeclarationList>(node.declarationList);
+        }
+        if (ts.isVariableDeclarationList(node) && node.declarations.length) {
+            let declaration = node.declarations.find(dec => ts.isArrowFunction(dec.initializer));
+            if (declaration) {
+                const arrowFunc = <ts.ArrowFunction>declaration.initializer;
+                this._emitName(sb, node);
+                return this._emitFunctionExpression(sb, arrowFunc, sourceFile);
+            }
+        }
+
+        return;
+    }
+
     dispose() {
         if (this._outputChannel) {
             this._outputChannel.dispose();

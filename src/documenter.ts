@@ -554,6 +554,7 @@ export class Documenter implements vs.Disposable {
             if (declaration) {
                 const arrowFunc = <ts.ArrowFunction>declaration.initializer;
                 this._emitName(sb, node);
+                this._emitAuthor(sb);
                 return this._emitFunctionExpression(sb, arrowFunc, sourceFile);
             }
         }

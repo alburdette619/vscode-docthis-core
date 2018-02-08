@@ -202,7 +202,7 @@ export class Documenter implements vs.Disposable {
     }
 
     private _emitAuthor(sb: utils.SnippetStringBuilder) {
-        if (vs.workspace.getConfiguration().get("doctdocthiscorehis.includeAuthorTag", false)) {
+        if (vs.workspace.getConfiguration().get("docthiscore.includeAuthorTag", false)) {
             let author: string = vs.workspace.getConfiguration().get("docthiscore.authorName", "");
             sb.append("@author " + author);
             sb.appendSnippetTabstop();

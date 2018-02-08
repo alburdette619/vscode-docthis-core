@@ -3,23 +3,25 @@ import * as ts from "typescript";
 import * as vs from "vscode";
 
 const supportedNodeKinds = [
+    ts.SyntaxKind.ArrowFunction,
     ts.SyntaxKind.ClassDeclaration,
-    ts.SyntaxKind.PropertyDeclaration,
-    ts.SyntaxKind.GetAccessor,
-    ts.SyntaxKind.SetAccessor,
-    ts.SyntaxKind.InterfaceDeclaration,
+    ts.SyntaxKind.Constructor,
     ts.SyntaxKind.EnumDeclaration,
     ts.SyntaxKind.EnumMember,
     ts.SyntaxKind.FunctionDeclaration,
-    ts.SyntaxKind.ArrowFunction,
+    ts.SyntaxKind.FunctionExpression,
+    ts.SyntaxKind.GetAccessor,
+    ts.SyntaxKind.InterfaceDeclaration,
     ts.SyntaxKind.MethodDeclaration,
     ts.SyntaxKind.MethodSignature,
+    ts.SyntaxKind.PropertyDeclaration,
     ts.SyntaxKind.PropertySignature,
-    ts.SyntaxKind.Constructor,
-    ts.SyntaxKind.FunctionExpression,
+    ts.SyntaxKind.SetAccessor,
+    ts.SyntaxKind.SourceFile,
     ts.SyntaxKind.VariableDeclaration,
     ts.SyntaxKind.VariableDeclarationList,
-    ts.SyntaxKind.VariableStatement];
+    ts.SyntaxKind.VariableStatement
+];
 
 export function emptyArray(arr: any[]) {
     while (arr.length > 0) {
@@ -155,7 +157,7 @@ export function nodeIsOfKind(node: ts.Node, kinds = supportedNodeKinds) {
 export function findFirstParent(node: ts.Node, kinds = supportedNodeKinds) {
     let parent = node.parent;
     while (parent) {
-        if (nodeIsOfKind(parent, kinds)) {
+        if (nodeIsOfKind(parent, kinds) && node.kind !== ts.SyntaxKind.SourceFile) {
             return parent;
         }
 

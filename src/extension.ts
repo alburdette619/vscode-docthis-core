@@ -14,6 +14,8 @@ const languages = [
 
 let documenter: Documenter;
 
+let fileWatcher: vs.FileSystemWatcher;
+
 function lazyInitializeDocumenter() {
     if (!documenter) {
         documenter = new Documenter();
@@ -48,6 +50,39 @@ function runCommand(commandName: string, document: vs.TextDocument, implFunc: ()
         console.error(e);
     }
 }
+
+const documentThis = (forCompletion: boolean) => {
+    const commandName = "Document This";
+
+    runCommand(commandName, vs.window.activeTextEditor.document, () => {
+        documenter.documentThis(vs.window.activeTextEditor, commandName, forCompletion);
+    });
+};
+
+const handleWatchFileCreate = () => {
+    disposeFileWatcher();
+    const config = vs.workspace.getConfiguration();
+    if (config.get("docthiscore.documentNewFile", false)) {
+        fileWatcher = vs.workspace.createFileSystemWatcher(
+            config.get("docthiscore.documentNewFileGlob", "**/*.{ts,js}"),
+            false,
+            true,
+            true
+        );
+
+        fileWatcher.onDidCreate((event) => {
+            if (event.scheme === "file") {
+                documentThis(true);
+            }
+        });
+    }
+};
+
+const disposeFileWatcher = () => {
+    if (fileWatcher) {
+        fileWatcher.dispose();
+    }
+};
 
 // Thanks, @mjbvz!
 class DocThisCompletionItem extends CompletionItem {
@@ -86,13 +121,7 @@ export function activate(context: vs.ExtensionContext): void {
         },
         "/"));
 
-    context.subscriptions.push(vs.commands.registerCommand("docthiscore.documentThis", (forCompletion: boolean) => {
-        const commandName = "Document This";
-
-        runCommand(commandName, vs.window.activeTextEditor.document, () => {
-            documenter.documentThis(vs.window.activeTextEditor, commandName, forCompletion);
-        });
-    }));
+    context.subscriptions.push(vs.commands.registerCommand("docthiscore.documentThis", documentThis));
 
     context.subscriptions.push(vs.commands.registerCommand("docthiscore.traceTypeScriptSyntaxNode", () => {
         const commandName = "Trace TypeScript Syntax Node";
@@ -101,4 +130,15 @@ export function activate(context: vs.ExtensionContext): void {
             documenter.traceNode(vs.window.activeTextEditor);
         });
     }));
+
+    if (vs.workspace.getConfiguration().get("docthiscore.documentNewFile", false)) {
+        handleWatchFileCreate();
+    }
+
+    vs.workspace.onDidChangeConfiguration(event => {
+        if (event.affectsConfiguration("docthiscore.documentNewFile") ||
+            event.affectsConfiguration("docthiscore.documentNewFileGlob")) {
+            handleWatchFileCreate();
+        }
+    });
 }

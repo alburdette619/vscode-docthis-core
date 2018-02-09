@@ -70,7 +70,8 @@ export function findChildForPosition(node: ts.Node, position: number): ts.Node {
 
     findChildFunc(node);
 
-    return lastMatchingNode;
+    // If no child elements are present here, assume that the passed in node is the one we're after.
+    return lastMatchingNode || node;
 }
 
 export function findFirstChildOfKindDepthFirst(node: ts.Node, kinds = supportedNodeKinds): ts.Node {
@@ -155,13 +156,15 @@ export function nodeIsOfKind(node: ts.Node, kinds = supportedNodeKinds) {
 }
 
 export function findFirstParent(node: ts.Node, kinds = supportedNodeKinds) {
-    let parent = node.parent;
-    while (parent) {
-        if (nodeIsOfKind(parent, kinds) && node.kind !== ts.SyntaxKind.SourceFile) {
-            return parent;
-        }
+    if (node) {
+        let parent = node.parent;
+        while (parent) {
+            if (nodeIsOfKind(parent, kinds) && node.kind !== ts.SyntaxKind.SourceFile) {
+                return parent;
+            }
 
-        parent = parent.parent;
+            parent = parent.parent;
+        }
     }
 
     return null;

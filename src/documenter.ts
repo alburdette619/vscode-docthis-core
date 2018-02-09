@@ -34,7 +34,15 @@ export class Documenter implements vs.Disposable {
         const sourceFile = this._getSourceFile(editor.document);
 
         const selection = editor.selection;
-        const caret = selection.start;
+        let caret = selection.start;
+
+        // If the file is empty, ts errors on the getPositionOfLineAndCharacter function.
+        // It seems having two empty lines and starting the comment snippet on the second
+        // line seems to work just fine.
+        if (!sourceFile.getText().length) {
+            sourceFile.text = "\n///\n";
+            caret = new vs.Position(1, 3);
+        }
 
         const position = ts.getPositionOfLineAndCharacter(sourceFile, caret.line, caret.character);
         const node = utils.findChildForPosition(sourceFile, position);
@@ -567,6 +575,7 @@ export class Documenter implements vs.Disposable {
     }
 
     private _emitSourceFile(sb: utils.SnippetStringBuilder, node: ts.SourceFile) {
+        // The filename has double a extension on it '.js.js'.
         const path = node.fileName.slice(0, -3);
         const pathParts = path.split("/");
 

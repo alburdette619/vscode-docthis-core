@@ -90,6 +90,16 @@
           "type": "string",
           "default": "(Set the text for this tag by adding docthiscore.authorName to your settings file.)",
           "description": "When docthiscore.includeAuthorTag is enabled, will add @author tag with this value."
+        },
+        "docthiscore.documentNewFile": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, new files targeted by docthiscore.documentNewFileGlob will be created with a file level comment block."
+        },
+        "docthiscore.documentNewFileGlob": {
+          "type": "string",
+          "default": "**/*.{ts,js}",
+          "description": "A glob that determines which new files are documented. docthiscore.documentNewFile must be enabled."
         }
       }
     }

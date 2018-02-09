@@ -135,7 +135,7 @@ export function activate(context: vs.ExtensionContext): void {
         handleWatchFileCreate();
     }
 
-    vs.workspace.onDidChangeConfiguration(event => {
+    vs.workspace.onDidChangeConfiguration((event: vs.ConfigurationChangeEvent) => {
         if (event.affectsConfiguration("docthiscore.documentNewFile") ||
             event.affectsConfiguration("docthiscore.documentNewFileGlob")) {
             handleWatchFileCreate();

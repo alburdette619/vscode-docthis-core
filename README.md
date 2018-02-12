@@ -1,3 +1,5 @@
+![GitHub Logo](/images/icon.png)
+
 [![Build Status](https://travis-ci.org/alburdette619/vscode-docthis-core.svg?branch=master)](https://travis-ci.org/alburdette619/vscode-docthis-core)
 
 # Document This Core

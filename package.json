@@ -56,20 +56,10 @@
           "default": true,
           "description": "When enabled, type information is added to comment tags."
         },
-        "docthiscore.includeMemberOfOnClassMembers": {
-          "type": "boolean",
-          "default": true,
-          "description": "When enabled, memberOf information is added to comment tags on class members."
-        },
-        "docthiscore.includeMemberOfOnInterfaceMembers": {
-          "type": "boolean",
-          "default": true,
-          "description": "When enabled, memberOf information is added to comment tags on interface members."
-        },
         "docthiscore.includeDescriptionTag": {
           "type": "boolean",
           "default": false,
-          "description": "When enabled, JSDoc comments for functions and methods will include @description."
+          "description": "When enabled, comments will include @description."
         },
         "docthiscore.enableHungarianNotationEvaluation": {
           "type": "boolean",
@@ -79,7 +69,7 @@
         "docthiscore.inferTypesFromNames": {
           "type": "boolean",
           "default": false,
-          "description": "When enabled, will use names of params & methods as type hints."
+          "description": " When enabled, will use names of params & methods as type hints."
         },
         "docthiscore.includeAuthorTag": {
           "type": "boolean",

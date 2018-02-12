@@ -579,10 +579,9 @@ export class Documenter implements vs.Disposable {
         const path = node.fileName.replace(/(\.js|\.ts)+/, "");
         const pathParts = path.split("/");
 
-        sb.appendLine(`@name ${pathParts.slice(-1)}`);
+        sb.appendLine(`@page ${pathParts.slice(-2).join("/")}`);
         this._emitDescriptionHeader(sb);
         this._emitAuthor(sb);
-        sb.appendLine(`@page ${pathParts.slice(-2).join("/")}`);
 
         return { line: 1, character: 0 };
     }

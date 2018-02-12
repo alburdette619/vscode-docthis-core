@@ -239,7 +239,7 @@ export class Documenter implements vs.Disposable {
             node.parent.kind !== ts.SyntaxKind.BinaryExpression &&
             node.parent.kind !== ts.SyntaxKind.PropertyDeclaration) {
 
-            targetNode = utils.findFirstParent(targetNode, [ts.SyntaxKind.VariableDeclarationList, ts.SyntaxKind.VariableDeclaration]);
+            targetNode = utils.findFirstParent(targetNode, [ts.SyntaxKind.VariableDeclaration, ts.SyntaxKind.VariableStatement]);
             if (!targetNode) {
                 return;
             }
@@ -582,7 +582,6 @@ export class Documenter implements vs.Disposable {
         sb.appendLine(`@name ${pathParts.slice(-1)}`);
         this._emitDescriptionHeader(sb);
         this._emitAuthor(sb);
-        sb.appendLine();
         sb.appendLine(`@page ${pathParts.slice(-2).join("/")}`);
 
         return { line: 1, character: 0 };

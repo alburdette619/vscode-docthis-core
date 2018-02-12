@@ -59,7 +59,13 @@ export class Documenter implements vs.Disposable {
         const docLocation = this._documentNode(sb, documentNode, sourceFile);
 
         if (docLocation) {
-            this._insertDocumentation(sb, docLocation, editor, forCompletion, false);
+            this._insertDocumentation(
+                sb,
+                docLocation,
+                editor,
+                forCompletion,
+                documentNode.kind !== ts.SyntaxKind.SourceFile
+            );
         } else {
             this._showFailureMessage(commandName, "at the current position");
         }

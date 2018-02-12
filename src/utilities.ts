@@ -245,7 +245,7 @@ export class SnippetStringBuilder {
                 return;
             }
 
-            sb.append(` ${inline ? "#" : ""}/// `);
+            sb.append(`///${inline ? "#" : ""} `);
             sb.appendLine(line);
         });
 

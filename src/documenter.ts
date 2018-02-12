@@ -403,64 +403,66 @@ export class Documenter implements vs.Disposable {
         }
 
         node.parameters.forEach(parameter => {
-            const name = parameter.name.getText();
-            const isOptional = parameter.questionToken || parameter.initializer;
-            const isArgs = !!parameter.dotDotDotToken;
-            const initializerValue = parameter.initializer ? parameter.initializer.getText() : null;
-
-            let typeName = "{any}";
-
-            if (includeTypes()) {
-                if (parameter.initializer && !parameter.type) {
-                    if (/^[0-9]/.test(initializerValue)) {
-                        typeName = "{number}";
-                    }
-                    else if (initializerValue.indexOf("\"") !== -1 ||
-                        initializerValue.indexOf("'") !== -1 ||
-                        initializerValue.indexOf("`") !== -1) {
-                        typeName = "{string}";
-                    }
-                    else if (initializerValue.indexOf("true") !== -1 ||
-                        initializerValue.indexOf("false") !== -1) {
-                        typeName = "{boolean}";
-                    }
-                }
-                else if (parameter.type) {
-                    typeName = utils.formatTypeName((isArgs ? "..." : "") + parameter.type.getFullText().trim());
-                }
-                else if (enableHungarianNotationEvaluation() && this._isHungarianNotation(name)) {
-                    typeName = this._getHungarianNotationType(name);
-                }
-                else if (inferTypes()) {
-                    typeName = this._inferParamTypeFromName(name);
-                }
+            if (ts.isObjectBindingPattern(parameter.name)) {
+                parameter.name.elements.forEach(element => {
+                    this._emitParameter(sb, element);
+                });
+            } else {
+                this._emitParameter(sb, parameter);
             }
-
-            sb.append("@param ");
-
-            if (includeTypes()) {
-                sb.append(typeName + " ");
-            }
-
-            if (isOptional) {
-                sb.append("[");
-            }
-
-            sb.append(name);
-
-            if (parameter.initializer && typeName) {
-                sb.append("=" + parameter.initializer.getText());
-            }
-
-            if (isOptional) {
-                sb.append("]");
-            }
-
-            sb.append(" ");
-            sb.appendSnippetTabstop();
-
-            sb.appendLine();
         });
+    }
+
+    private _emitParameter(sb: utils.SnippetStringBuilder, parameter) {
+        const name = parameter.name.getText();
+        const isArgs = !!parameter.dotDotDotToken;
+        const initializerValue = parameter.initializer ? parameter.initializer.getText() : null;
+
+        let typeName = "{any}";
+
+        if (includeTypes()) {
+            if (parameter.initializer && !parameter.type) {
+                if (/^[0-9]/.test(initializerValue)) {
+                    typeName = "{number}";
+                }
+                else if (initializerValue.indexOf("\"") !== -1 ||
+                    initializerValue.indexOf("'") !== -1 ||
+                    initializerValue.indexOf("`") !== -1) {
+                    typeName = "{string}";
+                }
+                else if (initializerValue.indexOf("true") !== -1 ||
+                    initializerValue.indexOf("false") !== -1) {
+                    typeName = "{boolean}";
+                }
+            }
+            else if (parameter.type) {
+                typeName = utils.formatTypeName((isArgs ? "..." : "") + parameter.type.getFullText().trim());
+            }
+            else if (enableHungarianNotationEvaluation() && this._isHungarianNotation(name)) {
+                typeName = this._getHungarianNotationType(name);
+            }
+            else if (inferTypes()) {
+                typeName = this._inferParamTypeFromName(name);
+            }
+        }
+
+        sb.append("@param ");
+
+        if (includeTypes()) {
+            sb.append(`${typeName} `);
+        }
+
+        sb.append(name);
+
+        if (initializerValue) {
+            sb.append(` [${parameter.initializer.getText()}]`);
+        }
+
+        sb.append(" - ");
+        sb.appendSnippetTabstop();
+
+        sb.appendLine();
+
     }
 
     private _isHungarianNotation(name: string): boolean {

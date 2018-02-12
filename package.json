@@ -78,7 +78,7 @@
         },
         "docthiscore.authorName": {
           "type": "string",
-          "default": "(Set the text for this tag by adding docthiscore.authorName to your settings file.)",
+          "default": "",
           "description": "When docthiscore.includeAuthorTag is enabled, will add @author tag with this value."
         },
         "docthiscore.documentNewFile": {

@@ -3,18 +3,27 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+
+---
+
+## 0.2.0 - 2018-02-21
+
 ---
 
 ### Added
 
 * Badges to README for GitHub and the Visual Studio Marketplace.
 
-### Fixed
-
 * Added `////` as a header and footer to file level comment blocks.
 
+### Fixed
+
+* Correctly formatted `@returns` lines for docs-core (Ex: `@returns {any} - ...`).
+
 ## 0.1.0 - 2018-02-12
+
 ---
+
 ### Added
 
 * Support for the `@name` tag on functions.

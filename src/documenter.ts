@@ -369,13 +369,15 @@ export class Documenter implements vs.Disposable {
         if (utils.findNonVoidReturnInCurrentScope(node) || (node.type && node.type.getText() !== "void")) {
             sb.append("@returns");
             if (includeTypes() && node.type) {
-                sb.append(" " + utils.formatTypeName(node.type.getText()));
+                sb.append(` {${utils.formatTypeName(node.type.getText())}}`);
             }
             else if (includeTypes() && inferTypes()) {
-                sb.append(" " + this._inferReturnTypeFromName(node.name.getText()));
+                sb.append(` {${this._inferReturnTypeFromName(node.name.getText())}}`);
+            } else if (includeTypes()) {
+                sb.append(" {any}");
             }
 
-            sb.append(" ");
+            sb.append(" - ");
             sb.appendSnippetTabstop();
 
             sb.appendLine();

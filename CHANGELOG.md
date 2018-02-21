@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ## Unreleased
 ---
 
+### Added
+
+* Badges to README for GitHub and the Visual Studio Marketplace.
+
 ## 0.1.0 - 2018-02-12
 ---
 ### Added

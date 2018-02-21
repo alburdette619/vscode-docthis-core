@@ -1,119 +1,119 @@
 {
-  "name": "docthis-core",
-  "displayName": "Document This Core",
-  "description": "Automatically generates detailed docs-core comments in TypeScript and JavaScript files.",
-  "version": "0.0.3",
-  "publisher": "alburdette619",
-  "icon": "images/icon.png",
-  "galleryBanner": {
-    "color": "#252627",
-    "theme": "dark"
-  },
-  "license": "MIT",
-  "licenseUrl": "LICENSE",
-  "engines": {
-    "vscode": "^1.19.0"
-  },
-  "categories": [
-    "Other",
-    "Snippets",
-    "Languages"
-  ],
-  "activationEvents": [
-    "*"
-  ],
-  "main": "./out/src/extension",
-  "contributes": {
-    "commands": [
-      {
-        "command": "docthiscore.documentThis",
-        "title": "Document This"
-      },
-      {
-        "command": "docthiscore.traceTypeScriptSyntaxNode",
-        "title": "Trace TypeScript Syntax Node"
-      }
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "command": "docthiscore.documentThis"
-        }
-      ]
+    "name": "docthis-core",
+    "displayName": "Document This Core",
+    "description": "Automatically generates detailed docs-core comments in TypeScript and JavaScript files.",
+    "version": "0.1.0",
+    "publisher": "alburdette619",
+    "icon": "images/icon.png",
+    "galleryBanner": {
+        "color": "#ffffff",
+        "theme": "light"
     },
-    "keybindings": [
-      {
-        "command": "docthiscore.documentThis",
-        "key": "ctrl+alt+d ctrl+alt+d"
-      }
+    "license": "MIT",
+    "licenseUrl": "LICENSE",
+    "engines": {
+        "vscode": "^1.19.0"
+    },
+    "categories": [
+        "Other",
+        "Snippets",
+        "Languages"
     ],
-    "configuration": {
-      "type": "object",
-      "title": "Document This Core configuration",
-      "properties": {
-        "docthiscore.includeTypes": {
-          "type": "boolean",
-          "default": true,
-          "description": "When enabled, type information is added to comment tags."
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "docthiscore.documentThis",
+                "title": "Document This"
+            },
+            {
+                "command": "docthiscore.traceTypeScriptSyntaxNode",
+                "title": "Trace TypeScript Syntax Node"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "command": "docthiscore.documentThis"
+                }
+            ]
         },
-        "docthiscore.includeDescriptionTag": {
-          "type": "boolean",
-          "default": false,
-          "description": "When enabled, comments will include @description."
-        },
-        "docthiscore.enableHungarianNotationEvaluation": {
-          "type": "boolean",
-          "default": false,
-          "description": "When enabled, hungarian notation will be used as a type hint."
-        },
-        "docthiscore.inferTypesFromNames": {
-          "type": "boolean",
-          "default": false,
-          "description": " When enabled, will use names of params & methods as type hints."
-        },
-        "docthiscore.includeAuthorTag": {
-          "type": "boolean",
-          "default": false,
-          "description": "When enabled, will add the @author tag."
-        },
-        "docthiscore.authorName": {
-          "type": "string",
-          "default": "",
-          "description": "When docthiscore.includeAuthorTag is enabled, will add @author tag with this value."
-        },
-        "docthiscore.documentNewFile": {
-          "type": "boolean",
-          "default": false,
-          "description": "When enabled, new files targeted by docthiscore.documentNewFileGlob will be created with a file level comment block."
-        },
-        "docthiscore.documentNewFileGlob": {
-          "type": "string",
-          "default": "**/*.{ts,js}",
-          "description": "A glob that determines which new files are documented. docthiscore.documentNewFile must be enabled."
+        "keybindings": [
+            {
+                "command": "docthiscore.documentThis",
+                "key": "ctrl+alt+d ctrl+alt+d"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Document This Core configuration",
+            "properties": {
+                "docthiscore.includeTypes": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "When enabled, type information is added to comment tags."
+                },
+                "docthiscore.includeDescriptionTag": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "When enabled, comments will include @description."
+                },
+                "docthiscore.enableHungarianNotationEvaluation": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "When enabled, hungarian notation will be used as a type hint."
+                },
+                "docthiscore.inferTypesFromNames": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": " When enabled, will use names of params & methods as type hints."
+                },
+                "docthiscore.includeAuthorTag": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "When enabled, will add the @author tag."
+                },
+                "docthiscore.authorName": {
+                    "type": "string",
+                    "default": "",
+                    "description": "When docthiscore.includeAuthorTag is enabled, will add @author tag with this value."
+                },
+                "docthiscore.documentNewFile": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "When enabled, new files targeted by docthiscore.documentNewFileGlob will be created with a file level comment block."
+                },
+                "docthiscore.documentNewFileGlob": {
+                    "type": "string",
+                    "default": "**/*.{ts,js}",
+                    "description": "A glob that determines which new files are documented. docthiscore.documentNewFile must be enabled."
+                }
+            }
         }
-      }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "lint": "node ./node_modules/tslint/bin/tslint src/**/*.ts",
+        "compile": "npm run lint && tsc -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.37",
+        "@types/node": "^6.0.59",
+        "tslint": "^4.3.1"
+    },
+    "dependencies": {
+        "typescript": "^2.2.0",
+        "vscode": "^1.1.10"
+    },
+    "bugs": {
+        "url": "https://github.com/alburdette619/vscode-docthis-core/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alburdette619/vscode-docthis-core"
     }
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "lint": "node ./node_modules/tslint/bin/tslint src/**/*.ts",
-    "compile": "npm run lint && tsc -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install"
-  },
-  "devDependencies": {
-    "@types/mocha": "^2.2.37",
-    "@types/node": "^6.0.59",
-    "tslint": "^4.3.1"
-  },
-  "dependencies": {
-    "typescript": "^2.2.0",
-    "vscode": "^1.1.10"
-  },
-  "bugs": {
-    "url": "https://github.com/alburdette619/vscode-docthis-core/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alburdette619/vscode-docthis-core"
-  }
 }

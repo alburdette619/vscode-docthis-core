@@ -4,6 +4,10 @@
 
 [![Build Status](https://travis-ci.org/alburdette619/vscode-docthis-core.svg?branch=master)](https://travis-ci.org/alburdette619/vscode-docthis-core)
 
+[![GitHub package version](https://img.shields.io/github/package-json/v/alburdette619/vscode-docthis-core.svg)]()  [![GitHub](https://img.shields.io/github/issues/alburdette619/vscode-docthis-core.svg?style=flat-square)](https://github.com/alburdette619/vscode-docthis-core/issues)  [![GitHub last commit](https://img.shields.io/github/last-commit/alburdette619/vscode-docthis-core.svg)]()  [![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+
+[![Visual Studio Marketplace](https://img.shields.io/vscode-marketplace/v/alburdette619.docthis-core.svg)]()  [![Visual Studio Marketplace](https://img.shields.io/vscode-marketplace/d/alburdette619.docthis-core.svg)]()  [![Visual Studio Marketplace](https://img.shields.io/vscode-marketplace/r/alburdette619.docthis-core.svg)]()
+
 "Document This Core" is a Visual Studio Code extension that automatically generates detailed [docs-core](https://github.com/tjbenton/docs) comments for both TypeScript and JavaScript files.  It is based on ["Document This"](https://github.com/joelday/vscode-docthis) by [joelday](https://github.com/joelday) and altered to use triple forward-slash style comments.
 
 ## Tags

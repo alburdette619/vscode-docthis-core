@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+### Fixed
+
+* Tag ordering consistency; the description and author tags were not consistently output in the same order.  Now it should always be author then description.
+
 ## 0.2.0 - 2018-02-21
 
 ---

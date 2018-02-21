@@ -245,7 +245,10 @@ export class SnippetStringBuilder {
                 return;
             }
 
-            sb.append(`///${inline ? "#" : ""} `);
+            if (!line.includes("///")) {
+                sb.append(`///${inline ? "#" : ""} `);
+            }
+
             sb.appendLine(line);
         });
 

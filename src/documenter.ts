@@ -583,6 +583,7 @@ export class Documenter implements vs.Disposable {
     }
 
     private _emitSourceFile(sb: utils.SnippetStringBuilder, node: ts.SourceFile) {
+        sb.appendLine("////");
         // The filename has double a extension on it '.js.js'.
         const path = node.fileName.replace(/(\.js|\.ts)+/, "");
         const pathParts = path.split("/");
@@ -590,6 +591,7 @@ export class Documenter implements vs.Disposable {
         sb.appendLine(`@page ${pathParts.slice(-2).join("/")}`);
         this._emitDescriptionHeader(sb);
         this._emitAuthor(sb);
+        sb.appendLine("////");
 
         return { line: 1, character: 0 };
     }

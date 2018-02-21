@@ -159,7 +159,7 @@ export function findFirstParent(node: ts.Node, kinds = supportedNodeKinds) {
     if (node) {
         let parent = node.parent;
         while (parent) {
-            if (nodeIsOfKind(parent, kinds) && node.kind !== ts.SyntaxKind.SourceFile) {
+            if (nodeIsOfKind(parent, kinds)) {
                 return parent;
             }
 
@@ -168,6 +168,23 @@ export function findFirstParent(node: ts.Node, kinds = supportedNodeKinds) {
     }
 
     return null;
+}
+
+export function hasDocumentedParent(node: ts.Node, source: ts.SourceFile): boolean {
+    let parent = findFirstParent(node);
+    let text = "";
+    while (parent && !ts.isSourceFile(parent)) {
+        text = parent.getFullText();
+        if (text) {
+            if (parent && text.trim().startsWith("/// ")) {
+                return true;
+            }
+        }
+
+        parent = findFirstParent(parent);
+    }
+
+    return false;
 }
 
 export class StringBuilder {

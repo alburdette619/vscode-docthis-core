@@ -64,7 +64,7 @@ export class Documenter implements vs.Disposable {
                 docLocation,
                 editor,
                 forCompletion,
-                documentNode.kind !== ts.SyntaxKind.SourceFile
+                utils.hasDocumentedParent(documentNode, sourceFile)
             );
         } else {
             this._showFailureMessage(commandName, "at the current position");

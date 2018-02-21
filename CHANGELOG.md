@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+### Changed
+
+* Inline comments (`///#`) are now only applied if a parent node, other than the source file, has been documented.  Previously this was done if the comment block was not a file level comment.
+
 ### Fixed
 
 * Tag ordering consistency; the description and author tags were not consistently output in the same order.  Now it should always be author then description.

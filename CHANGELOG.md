@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 
 * Badges to README for GitHub and the Visual Studio Marketplace.
 
+### Fixed
+
+* Added `////` as a header and footer to file level comment blocks.
+
 ## 0.1.0 - 2018-02-12
 ---
 ### Added

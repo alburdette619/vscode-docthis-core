@@ -159,7 +159,7 @@ export function findFirstParent(node: ts.Node, kinds = supportedNodeKinds) {
     if (node) {
         let parent = node.parent;
         while (parent) {
-            if (nodeIsOfKind(parent, kinds) && node.kind !== ts.SyntaxKind.SourceFile) {
+            if (nodeIsOfKind(parent, kinds)) {
                 return parent;
             }
 

@@ -262,18 +262,11 @@ export class Documenter implements vs.Disposable {
     }
 
     private _emitClassDeclaration(sb: utils.SnippetStringBuilder, node: ts.ClassDeclaration) {
-        this._emitDescriptionHeader(sb);
+        this._emitName(sb, node);
         this._emitAuthor(sb);
+        this._emitDescriptionHeader(sb);
 
         this._emitModifiers(sb, node);
-
-        sb.append("@class");
-
-        if (node.name) {
-            sb.append(` ${ node.name.getText() }`);
-        }
-
-        sb.appendLine();
 
         this._emitHeritageClauses(sb, node);
         // this._emitTypeParameters(sb, node);
@@ -330,8 +323,8 @@ export class Documenter implements vs.Disposable {
 
     private _emitMethodDeclaration(sb: utils.SnippetStringBuilder, node: ts.MethodDeclaration | ts.FunctionDeclaration) {
         if (ts.isFunctionDeclaration(node)) { this._emitName(sb, node); }
-        this._emitDescriptionHeader(sb);
         this._emitAuthor(sb);
+        this._emitDescriptionHeader(sb);
 
         this._emitModifiers(sb, node);
         // this._emitTypeParameters(sb, node);
@@ -553,9 +546,9 @@ export class Documenter implements vs.Disposable {
         });
     }
 
-    private _emitName(sb: utils.SnippetStringBuilder, node: ts.FunctionDeclaration | ts.VariableDeclarationList) {
+    private _emitName(sb: utils.SnippetStringBuilder, node: ts.FunctionDeclaration | ts.VariableDeclarationList | ts.ClassDeclaration) {
         let name;
-        if (ts.isFunctionDeclaration(node) && node.name) {
+        if ((ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node)) && node.name) {
             name = node.name.getText();
         } else if (ts.isVariableDeclarationList(node) && node.declarations.length) {
             name = (<ts.VariableDeclarationList>node).declarations[0].name.getText();
@@ -591,8 +584,8 @@ export class Documenter implements vs.Disposable {
         const pathParts = path.split("/");
 
         sb.appendLine(`@page ${pathParts.slice(-2).join("/")}`);
-        this._emitDescriptionHeader(sb);
         this._emitAuthor(sb);
+        this._emitDescriptionHeader(sb);
         sb.appendLine("////");
 
         return { line: 1, character: 0 };

@@ -36,14 +36,6 @@ export class Documenter implements vs.Disposable {
         const selection = editor.selection;
         let caret = selection.start;
 
-        // If the file is empty, ts errors on the getPositionOfLineAndCharacter function.
-        // It seems having two empty lines and starting the comment snippet on the second
-        // line seems to work just fine.
-        if (!sourceFile.getText().length) {
-            sourceFile.text = "\n///\n";
-            caret = new vs.Position(1, 3);
-        }
-
         const position = ts.getPositionOfLineAndCharacter(sourceFile, caret.line, caret.character);
         const node = utils.findChildForPosition(sourceFile, position);
         const firstParent = utils.findFirstParent(node);
@@ -69,6 +61,32 @@ export class Documenter implements vs.Disposable {
         } else {
             this._showFailureMessage(commandName, "at the current position");
         }
+    }
+
+    documentSourceFile(editor: vs.TextEditor, commandName: string) {
+        const sourceFile = this._getSourceFile(editor.document);
+
+        editor.edit((editBuilder: vs.TextEditorEdit) => {
+            editBuilder.insert(new vs.Position(0, 0), "\n\n");
+        }).then(() => {
+            const sb = new utils.SnippetStringBuilder();
+
+            const docLocation = this._documentNode(sb, sourceFile);
+
+            if (docLocation) {
+                this._insertDocumentation(
+                    sb,
+                    docLocation,
+                    editor,
+                    true,
+                    false
+                );
+            } else {
+                this._showFailureMessage(commandName, "for this file");
+            }
+        }, () => {
+            this._showFailureMessage(commandName, "for this file");
+        });
     }
 
     traceNode(editor: vs.TextEditor) {
@@ -159,7 +177,7 @@ export class Documenter implements vs.Disposable {
         return sourceFile;
     }
 
-    private _documentNode(sb: utils.SnippetStringBuilder, node: ts.Node, sourceFile: ts.SourceFile): ts.LineAndCharacter {switch (node.kind) {
+    private _documentNode(sb: utils.SnippetStringBuilder, node: ts.Node, sourceFile?: ts.SourceFile): ts.LineAndCharacter {switch (node.kind) {
             case ts.SyntaxKind.ClassDeclaration:
                 this._emitClassDeclaration(sb, <ts.ClassDeclaration>node);
                 break;

@@ -59,6 +59,14 @@ const documentThis = (forCompletion: boolean) => {
     });
 };
 
+const documentThisFile = () => {
+    const commandName = "Document This File";
+
+    runCommand(commandName, vs.window.activeTextEditor.document, () => {
+        documenter.documentSourceFile(vs.window.activeTextEditor, commandName);
+    });
+};
+
 const handleWatchFileCreate = () => {
     disposeFileWatcher();
     const config = vs.workspace.getConfiguration();
@@ -72,7 +80,7 @@ const handleWatchFileCreate = () => {
 
         fileWatcher.onDidCreate((event) => {
             if (event.scheme === "file") {
-                documentThis(true);
+                documentThisFile();
             }
         });
     }
@@ -122,6 +130,8 @@ export function activate(context: vs.ExtensionContext): void {
         "/"));
 
     context.subscriptions.push(vs.commands.registerCommand("docthiscore.documentThis", documentThis));
+
+    context.subscriptions.push(vs.commands.registerCommand("docthiscore.documentThisFile", documentThisFile));
 
     context.subscriptions.push(vs.commands.registerCommand("docthiscore.traceTypeScriptSyntaxNode", () => {
         const commandName = "Trace TypeScript Syntax Node";

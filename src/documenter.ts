@@ -177,7 +177,8 @@ export class Documenter implements vs.Disposable {
         return sourceFile;
     }
 
-    private _documentNode(sb: utils.SnippetStringBuilder, node: ts.Node, sourceFile?: ts.SourceFile): ts.LineAndCharacter {switch (node.kind) {
+    private _documentNode(sb: utils.SnippetStringBuilder, node: ts.Node, sourceFile?: ts.SourceFile): ts.LineAndCharacter {
+        switch (node.kind) {
             case ts.SyntaxKind.ClassDeclaration:
                 this._emitClassDeclaration(sb, <ts.ClassDeclaration>node);
                 break;
@@ -340,7 +341,7 @@ export class Documenter implements vs.Disposable {
     // }
 
     private _emitMethodDeclaration(sb: utils.SnippetStringBuilder, node: ts.MethodDeclaration | ts.FunctionDeclaration) {
-        if (ts.isFunctionDeclaration(node)) { this._emitName(sb, node); }
+        this._emitName(sb, node);
         this._emitAuthor(sb);
         this._emitDescriptionHeader(sb);
 
@@ -564,12 +565,12 @@ export class Documenter implements vs.Disposable {
         });
     }
 
-    private _emitName(sb: utils.SnippetStringBuilder, node: ts.FunctionDeclaration | ts.VariableDeclarationList | ts.ClassDeclaration) {
+    private _emitName(sb: utils.SnippetStringBuilder, node: ts.FunctionDeclaration | ts.VariableDeclarationList | ts.ClassDeclaration | ts.MethodDeclaration) {
         let name;
-        if ((ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node)) && node.name) {
-            name = node.name.getText();
-        } else if (ts.isVariableDeclarationList(node) && node.declarations.length) {
+        if (ts.isVariableDeclarationList(node) && node.declarations.length) {
             name = (<ts.VariableDeclarationList>node).declarations[0].name.getText();
+        } else if ((ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node) || ts.isMethodDeclaration(node)) && node.name) {
+            name = node.name.getText();
         }
 
         sb.appendLine(`@name ${name}`);

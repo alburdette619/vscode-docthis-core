@@ -6,9 +6,15 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+### Added
+
+* The `Doucment File` command was added.  Executing this command can be done via the command palette, the context menu, or by using the keybinding `ctrl+alt+d ctrl+alt+f`.  This will insert a file level comment at the top line of the file.
+
 ### Changed
 
 * Inline comments (`///#`) are now only applied if a parent node, other than the source file, has been documented.  Previously this was done if the comment block was not a file level comment.
+
+* File level comments now have their own command and are not generated as part of the auto completion of a tripple slash (`///`).
 
 ### Fixed
 

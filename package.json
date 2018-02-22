@@ -30,6 +30,10 @@
                 "title": "Document This"
             },
             {
+                "command": "docthiscore.documentThisFile",
+                "title": "Document This File"
+            },
+            {
                 "command": "docthiscore.traceTypeScriptSyntaxNode",
                 "title": "Trace TypeScript Syntax Node"
             }
@@ -38,6 +42,9 @@
             "editor/context": [
                 {
                     "command": "docthiscore.documentThis"
+                },
+                {
+                    "command": "docthiscore.documentThisFile"
                 }
             ]
         },
@@ -45,6 +52,10 @@
             {
                 "command": "docthiscore.documentThis",
                 "key": "ctrl+alt+d ctrl+alt+d"
+            },
+            {
+                "command": "docthiscore.documentThisFile",
+                "key": "ctrl+alt+d ctrl+alt+f"
             }
         ],
         "configuration": {

@@ -10,21 +10,30 @@
 
 "Document This Core" is a Visual Studio Code extension that automatically generates detailed [docs-core](https://github.com/tjbenton/docs) comments for both TypeScript and JavaScript files.  It is based on ["Document This"](https://github.com/joelday/vscode-docthis) by [joelday](https://github.com/joelday) and altered to use triple forward-slash style comments.
 
+---
+
 ## Tags
 
 Supports docs-core and Closure Compiler tags:
 
 ```@access, @author, @description, @name, @page, @param, @property, @readonly, @returns, and @type.```
 
-## Commands Pallette
+---
 
-`Document This` - Attempts to generate documentation for the subsequent line.
+## Commands
 
-`Trace TypeScript Syntax Node` - Prints info about the node ancestry at a given caret position.
+Command Name | Keybinding | Description
+:--- | :---: | :---
+Document This | `Ctrl+Alt+D` + `Ctrl+Alt+D` | Attempts to generate documentation for the subsequent line
+Document This File | `Ctrl+Alt+D` + `Ctrl+Alt+F` | Inserts file level documentation for the current file
+
+ Commands can also be found on the context menu.
+
+---
 
 ## Configuration
 
-Command Name | Type | Default | Description
+Setting Name | Type | Default | Description
 :--- | :---: | :---: | :---
 docthiscore.includeTypes | boolean | true | When enabled, type information is added to comment tags
 docthiscore.includeDescriptionTag | boolean | false | When enabled, JSDoc comments for functions and methods will include @description
@@ -34,9 +43,3 @@ docthiscore.includeAuthorTag | boolean | false | When enabled, will add the @aut
 docthiscore.authorName | string | - |When docthiscore.includeAuthorTag is enabled, will add @author tag with this value
 docthiscore.documentNewFile | boolean | false | When enabled, new files targeted by docthiscore.documentNewFileGlob will be created with a file level comment block
 docthiscore.documentNewFileGlob | string | **/*.{ts,js} | A glob that determines which new files are documented. docthiscore.documentNewFile must be enabled
-
-## Document This
-
-`Ctrl+Alt+D` and again `Ctrl+Alt+D`
-
-Generates documentation for whatever the caret is on or inside of.
